@@ -5,21 +5,14 @@ import CropSelector from '@/components/CropSelector';
 import { WeatherProvider, SeasonSelector } from '@/components/WeatherContext';
 import AdviceSection from '@/components/AdviceSection';
 import QuestionForm from '@/components/QuestionForm';
-import ImageViewer from '@/components/ImageViewer';
 import WhatsAppNotifier from '@/components/WhatsAppNotifier';
 
 const Index = () => {
   const [selectedCrop, setSelectedCrop] = useState<'padi' | 'jagung' | null>(null);
-  const [showImageViewer, setShowImageViewer] = useState(false);
   const [showWhatsApp, setShowWhatsApp] = useState(false);
 
   const handleSelectCrop = (crop: 'padi' | 'jagung') => {
     setSelectedCrop(crop);
-    setShowImageViewer(false);
-  };
-
-  const toggleImageViewer = () => {
-    setShowImageViewer(!showImageViewer);
   };
   
   const toggleWhatsApp = () => {
@@ -41,14 +34,7 @@ const Index = () => {
               <>
                 <AdviceSection selectedCrop={selectedCrop} />
                 
-                <div className="w-full max-w-md mx-auto mt-4 space-y-2">
-                  <button 
-                    onClick={toggleImageViewer}
-                    className="w-full py-2 bg-farm-green text-white rounded-md hover:bg-farm-green-dark transition-colors"
-                  >
-                    {showImageViewer ? 'Sembunyikan Gambar' : 'Lihat Gambar Hama & Pupuk'}
-                  </button>
-                  
+                <div className="w-full max-w-md mx-auto mt-4">
                   <button 
                     onClick={toggleWhatsApp}
                     className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
@@ -57,7 +43,6 @@ const Index = () => {
                   </button>
                 </div>
                 
-                {showImageViewer && <ImageViewer selectedCrop={selectedCrop} />}
                 {showWhatsApp && <WhatsAppNotifier />}
               </>
             )}
