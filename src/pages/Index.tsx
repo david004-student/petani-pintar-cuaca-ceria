@@ -5,12 +5,19 @@ import CropSelector from '@/components/CropSelector';
 import { WeatherProvider, SeasonSelector } from '@/components/WeatherContext';
 import AdviceSection from '@/components/AdviceSection';
 import QuestionForm from '@/components/QuestionForm';
+import ImageViewer from '@/components/ImageViewer';
 
 const Index = () => {
   const [selectedCrop, setSelectedCrop] = useState<'padi' | 'jagung' | null>(null);
+  const [showImageViewer, setShowImageViewer] = useState(false);
 
   const handleSelectCrop = (crop: 'padi' | 'jagung') => {
     setSelectedCrop(crop);
+    setShowImageViewer(false);
+  };
+
+  const toggleImageViewer = () => {
+    setShowImageViewer(!showImageViewer);
   };
 
   return (
@@ -24,7 +31,22 @@ const Index = () => {
             
             <SeasonSelector />
             
-            {selectedCrop && <AdviceSection selectedCrop={selectedCrop} />}
+            {selectedCrop && (
+              <>
+                <AdviceSection selectedCrop={selectedCrop} />
+                
+                <div className="w-full max-w-md mx-auto mt-4">
+                  <button 
+                    onClick={toggleImageViewer}
+                    className="w-full py-2 bg-farm-green text-white rounded-md hover:bg-farm-green-dark transition-colors"
+                  >
+                    {showImageViewer ? 'Sembunyikan Gambar' : 'Lihat Gambar Hama & Pupuk'}
+                  </button>
+                </div>
+                
+                {showImageViewer && <ImageViewer selectedCrop={selectedCrop} />}
+              </>
+            )}
             
             <QuestionForm selectedCrop={selectedCrop} />
           </div>
