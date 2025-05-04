@@ -17,31 +17,31 @@ interface ImageViewerProps {
 const ImageViewer: React.FC<ImageViewerProps> = ({ selectedCrop }) => {
   const [activeTab, setActiveTab] = useState<'hama' | 'pupuk'>('hama');
 
-  // Database gambar hama dan pupuk
+  // Database gambar hama dan pupuk dengan URL yang lebih relevan
   const imageDatabase: Record<'padi' | 'jagung', Record<'hama' | 'pupuk', ImageData[]>> = {
     padi: {
       hama: [
         {
           title: 'Wereng Coklat',
           description: 'Serangga kecil yang menghisap cairan tanaman padi, menyebabkan daun menguning dan mengering.',
-          imageUrl: 'https://images.unsplash.com/photo-1498936178812-4b2e558d2937'
+          imageUrl: 'https://images.unsplash.com/photo-1584005613293-33427c19c5a3?q=80&w=1000&auto=format&fit=crop'
         },
         {
           title: 'Penggerek Batang',
           description: 'Larva yang masuk ke dalam batang padi dan memakan bagian dalam, membuat batang mudah patah.',
-          imageUrl: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1'
+          imageUrl: 'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=1000&auto=format&fit=crop'
         }
       ],
       pupuk: [
         {
           title: 'Pupuk Urea',
           description: 'Pupuk dengan kandungan nitrogen tinggi, baik untuk pertumbuhan daun padi.',
-          imageUrl: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9'
+          imageUrl: 'https://images.unsplash.com/photo-1506543730435-e2c1d4553a84?q=80&w=1000&auto=format&fit=crop'
         },
         {
           title: 'Pupuk Kompos',
           description: 'Pupuk organik yang meningkatkan kesuburan tanah dan daya tahan tanaman padi.',
-          imageUrl: 'https://images.unsplash.com/photo-1501286353178-1ec871214838'
+          imageUrl: 'https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=1000&auto=format&fit=crop'
         }
       ]
     },
@@ -50,24 +50,24 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ selectedCrop }) => {
         {
           title: 'Ulat Grayak',
           description: 'Ulat yang memakan daun jagung, menyebabkan lubang-lubang pada daun.',
-          imageUrl: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1'
+          imageUrl: 'https://images.unsplash.com/photo-1624019819058-27b13e6cf2b4?q=80&w=1000&auto=format&fit=crop'
         },
         {
           title: 'Penggerek Tongkol',
           description: 'Larva yang merusak biji jagung dengan cara masuk ke dalam tongkol.',
-          imageUrl: 'https://images.unsplash.com/photo-1498936178812-4b2e558d2937'
+          imageUrl: 'https://images.unsplash.com/photo-1598519502667-e8c07c1aec6d?q=80&w=1000&auto=format&fit=crop'
         }
       ],
       pupuk: [
         {
           title: 'NPK',
           description: 'Pupuk lengkap dengan kandungan nitrogen, fosfor, dan kalium untuk pertumbuhan jagung optimal.',
-          imageUrl: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9'
+          imageUrl: 'https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?q=80&w=1000&auto=format&fit=crop'
         },
         {
           title: 'Pupuk Kandang',
           description: 'Pupuk organik yang baik untuk memperbaiki struktur tanah dan nutrisi jagung.',
-          imageUrl: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07'
+          imageUrl: 'https://images.unsplash.com/photo-1627227804101-b7427b450637?q=80&w=1000&auto=format&fit=crop'
         }
       ]
     }
