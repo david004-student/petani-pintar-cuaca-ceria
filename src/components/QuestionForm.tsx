@@ -87,7 +87,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ selectedCrop }) => {
     }
   };
 
-  // Database untuk hama dan pupuk
+  // Fix: Database for pests and fertilizers - remove incorrect structure
   const pestFertilizerDatabase: Record<'padi' | 'jagung', Record<'hama' | 'pupuk', PestFertilizerData[]>> = {
     padi: {
       hama: [
@@ -126,27 +126,40 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ selectedCrop }) => {
       ]
     },
     jagung: {
-      hujan: {
-        "hama": "Ulat grayak dan penggerek tongkol sering menyerang saat musim hujan. Gunakan pestisida secara tepat atau predator alami.",
-        "pupuk": "Berikan pupuk saat cuaca tidak hujan agar tidak tercuci. Tambahkan pupuk yang mengandung kalsium untuk penguatan batang.",
-        "irigasi": "Pastikan drainase lahan baik untuk mencegah genangan air yang bisa membuat akar busuk.",
-        "bibit": "Pilih bibit yang tahan penyakit bulai yang sering muncul saat kelembapan tinggi.",
-        "panen": "Panen saat cuaca cerah dan segera keringkan untuk menghindari tumbuhnya jamur pada tongkol jagung."
-      },
-      kemarau: {
-        "hama": "Kutu daun dan tungau lebih banyak muncul saat kemarau. Semprotkan air pada daun untuk mengurangi serangan.",
-        "pupuk": "Tambahkan pupuk organik untuk menjaga kelembapan tanah dan nutrisi. Pupuk berimbang NPK sangat dibutuhkan.",
-        "irigasi": "Siram jagung secara teratur, terutama saat fase pembungaan dan pengisian biji.",
-        "bibit": "Gunakan varietas tahan kekeringan seperti BISI atau Pioneer yang telah teruji.",
-        "panen": "Hasil jagung biasanya lebih baik jika ditanam di awal musim kemarau dengan pengairan yang cukup."
-      },
-      peralihan: {
-        "hama": "Berbagai jenis hama mungkin muncul. Lakukan pemantauan rutin dan pengendalian dini.",
-        "pupuk": "Sesuaikan pemberian pupuk dengan kondisi tanah dan cuaca. Hindari pemupukan saat akan turun hujan lebat.",
-        "irigasi": "Siapkan sistem pengairan yang bisa disesuaikan dengan cepat mengikuti perubahan cuaca.",
-        "bibit": "Pilih varietas yang adaptif terhadap perubahan seperti NK atau Pioneer yang memiliki daya adaptasi baik.",
-        "panen": "Perhatikan prakiraan cuaca dan lakukan panen saat kondisi optimal untuk mendapatkan hasil terbaik."
-      }
+      hama: [
+        {
+          title: 'Ulat Grayak',
+          description: 'Ulat yang memakan daun jagung, menyebabkan lubang-lubang pada daun.',
+          imageUrl: 'https://images.unsplash.com/photo-1624019819058-27b13e6cf2b4?q=80&w=1000&auto=format&fit=crop'
+        },
+        {
+          title: 'Penggerek Tongkol',
+          description: 'Larva yang merusak biji jagung dengan cara masuk ke dalam tongkol.',
+          imageUrl: 'https://images.unsplash.com/photo-1598519502667-e8c07c1aec6d?q=80&w=1000&auto=format&fit=crop'
+        },
+        {
+          title: 'Kutu Daun',
+          description: 'Serangga kecil yang menghisap cairan daun jagung, menyebabkan daun keriting dan kerdil.',
+          imageUrl: 'https://images.unsplash.com/photo-1621187838819-ac08318fa5a1?q=80&w=1000&auto=format&fit=crop'
+        }
+      ],
+      pupuk: [
+        {
+          title: 'NPK',
+          description: 'Pupuk lengkap dengan kandungan nitrogen, fosfor, dan kalium untuk pertumbuhan jagung optimal.',
+          imageUrl: 'https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?q=80&w=1000&auto=format&fit=crop'
+        },
+        {
+          title: 'Pupuk Kandang',
+          description: 'Pupuk organik yang baik untuk memperbaiki struktur tanah dan nutrisi jagung.',
+          imageUrl: 'https://images.unsplash.com/photo-1627227804101-b7427b450637?q=80&w=1000&auto=format&fit=crop'
+        },
+        {
+          title: 'ZA',
+          description: 'Pupuk yang mengandung nitrogen dan belerang, baik untuk pertumbuhan vegetatif jagung.',
+          imageUrl: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1000&auto=format&fit=crop'
+        }
+      ]
     }
   };
 
