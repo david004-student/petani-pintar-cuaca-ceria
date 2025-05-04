@@ -30,6 +30,11 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ selectedCrop }) => {
           title: 'Penggerek Batang',
           description: 'Larva yang masuk ke dalam batang padi dan memakan bagian dalam, membuat batang mudah patah.',
           imageUrl: 'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=1000&auto=format&fit=crop'
+        },
+        {
+          title: 'Walang Sangit',
+          description: 'Serangga berbau yang menghisap cairan bulir padi yang sedang mengisi, menyebabkan bulir hampa.',
+          imageUrl: 'https://images.unsplash.com/photo-1585132862480-410c692c9341?q=80&w=1000&auto=format&fit=crop'
         }
       ],
       pupuk: [
@@ -42,6 +47,11 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ selectedCrop }) => {
           title: 'Pupuk Kompos',
           description: 'Pupuk organik yang meningkatkan kesuburan tanah dan daya tahan tanaman padi.',
           imageUrl: 'https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=1000&auto=format&fit=crop'
+        },
+        {
+          title: 'Pupuk TSP',
+          description: 'Pupuk dengan kandungan fosfor tinggi, baik untuk pembentukan akar dan pertumbuhan malai padi.',
+          imageUrl: 'https://images.unsplash.com/photo-1537105935666-5a31bdf56fef?q=80&w=1000&auto=format&fit=crop'
         }
       ]
     },
@@ -56,6 +66,11 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ selectedCrop }) => {
           title: 'Penggerek Tongkol',
           description: 'Larva yang merusak biji jagung dengan cara masuk ke dalam tongkol.',
           imageUrl: 'https://images.unsplash.com/photo-1598519502667-e8c07c1aec6d?q=80&w=1000&auto=format&fit=crop'
+        },
+        {
+          title: 'Kutu Daun',
+          description: 'Serangga kecil yang menghisap cairan daun jagung, menyebabkan daun keriting dan kerdil.',
+          imageUrl: 'https://images.unsplash.com/photo-1621187838819-ac08318fa5a1?q=80&w=1000&auto=format&fit=crop'
         }
       ],
       pupuk: [
@@ -68,6 +83,11 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ selectedCrop }) => {
           title: 'Pupuk Kandang',
           description: 'Pupuk organik yang baik untuk memperbaiki struktur tanah dan nutrisi jagung.',
           imageUrl: 'https://images.unsplash.com/photo-1627227804101-b7427b450637?q=80&w=1000&auto=format&fit=crop'
+        },
+        {
+          title: 'ZA',
+          description: 'Pupuk yang mengandung nitrogen dan belerang, baik untuk pertumbuhan vegetatif jagung.',
+          imageUrl: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1000&auto=format&fit=crop'
         }
       ]
     }
