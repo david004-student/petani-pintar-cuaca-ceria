@@ -1,9 +1,8 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
 import { toast } from 'sonner';
 import { useWeather } from './WeatherContext';
 
@@ -24,17 +23,9 @@ interface AnswerData {
   };
 }
 
-// Interface for pest and fertilizer data
-interface PestFertilizerData {
-  title: string;
-  description: string;
-  imageUrl: string;
-}
-
 const QuestionForm: React.FC<QuestionFormProps> = ({ selectedCrop }) => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
   const { currentSeason } = useWeather();
 
   // Database sederhana untuk pertanyaan umum
@@ -87,82 +78,6 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ selectedCrop }) => {
     }
   };
 
-  // Fix: Database for pests and fertilizers - remove incorrect structure
-  const pestFertilizerDatabase: Record<'padi' | 'jagung', Record<'hama' | 'pupuk', PestFertilizerData[]>> = {
-    padi: {
-      hama: [
-        {
-          title: 'Wereng Coklat',
-          description: 'Serangga kecil yang menghisap cairan tanaman padi, menyebabkan daun menguning dan mengering.',
-          imageUrl: 'https://images.unsplash.com/photo-1584005613293-33427c19c5a3?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-          title: 'Penggerek Batang',
-          description: 'Larva yang masuk ke dalam batang padi dan memakan bagian dalam, membuat batang mudah patah.',
-          imageUrl: 'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-          title: 'Walang Sangit',
-          description: 'Serangga berbau yang menghisap cairan bulir padi yang sedang mengisi, menyebabkan bulir hampa.',
-          imageUrl: 'https://images.unsplash.com/photo-1585132862480-410c692c9341?q=80&w=1000&auto=format&fit=crop'
-        }
-      ],
-      pupuk: [
-        {
-          title: 'Pupuk Urea',
-          description: 'Pupuk dengan kandungan nitrogen tinggi, baik untuk pertumbuhan daun padi.',
-          imageUrl: 'https://images.unsplash.com/photo-1506543730435-beb7fc7023d8?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-          title: 'Pupuk Kompos',
-          description: 'Pupuk organik yang meningkatkan kesuburan tanah dan daya tahan tanaman padi.',
-          imageUrl: 'https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-          title: 'Pupuk TSP',
-          description: 'Pupuk dengan kandungan fosfor tinggi, baik untuk pembentukan akar dan pertumbuhan malai padi.',
-          imageUrl: 'https://images.unsplash.com/photo-1537105935666-5a31bdf56fef?q=80&w=1000&auto=format&fit=crop'
-        }
-      ]
-    },
-    jagung: {
-      hama: [
-        {
-          title: 'Ulat Grayak',
-          description: 'Ulat yang memakan daun jagung, menyebabkan lubang-lubang pada daun.',
-          imageUrl: 'https://images.unsplash.com/photo-1624019819058-27b13e6cf2b4?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-          title: 'Penggerek Tongkol',
-          description: 'Larva yang merusak biji jagung dengan cara masuk ke dalam tongkol.',
-          imageUrl: 'https://images.unsplash.com/photo-1598519502667-e8c07c1aec6d?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-          title: 'Kutu Daun',
-          description: 'Serangga kecil yang menghisap cairan daun jagung, menyebabkan daun keriting dan kerdil.',
-          imageUrl: 'https://images.unsplash.com/photo-1621187838819-ac08318fa5a1?q=80&w=1000&auto=format&fit=crop'
-        }
-      ],
-      pupuk: [
-        {
-          title: 'NPK',
-          description: 'Pupuk lengkap dengan kandungan nitrogen, fosfor, dan kalium untuk pertumbuhan jagung optimal.',
-          imageUrl: 'https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-          title: 'Pupuk Kandang',
-          description: 'Pupuk organik yang baik untuk memperbaiki struktur tanah dan nutrisi jagung.',
-          imageUrl: 'https://images.unsplash.com/photo-1627227804101-b7427b450637?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-          title: 'ZA',
-          description: 'Pupuk yang mengandung nitrogen dan belerang, baik untuk pertumbuhan vegetatif jagung.',
-          imageUrl: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1000&auto=format&fit=crop'
-        }
-      ]
-    }
-  };
-
   // Function to handle form submit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -172,189 +87,37 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ selectedCrop }) => {
       return;
     }
 
-    // Check if question is related to search
-    const searchTerms = ["cari", "carikan", "informasi", "info", "tentang", "apa itu"];
-    let isSearchQuestion = false;
-    let searchCategory: 'hama' | 'pupuk' | null = null;
-    let searchKeyword = '';
+    // Logika sederhana untuk mencocokkan kata kunci
+    const questionLower = question.toLowerCase();
+    let foundAnswer = null;
+
+    // Cek kata kunci umum
+    const keywords = ["hama", "pupuk", "irigasi", "air", "bibit", "panen"];
     
-    for (const term of searchTerms) {
-      if (question.toLowerCase().includes(term)) {
-        isSearchQuestion = true;
-        
-        if (question.toLowerCase().includes("hama")) {
-          searchCategory = 'hama';
-        } else if (question.toLowerCase().includes("pupuk")) {
-          searchCategory = 'pupuk';
-        }
-        
-        // Extract search keyword - look for specific pest or fertilizer name
-        const qLower = question.toLowerCase();
-        const database = selectedCrop ? pestFertilizerDatabase[selectedCrop] : null;
-        
-        if (database && searchCategory) {
-          for (const item of database[searchCategory]) {
-            if (qLower.includes(item.title.toLowerCase())) {
-              searchKeyword = item.title;
-              break;
-            }
-          }
-        }
-        
-        break;
-      }
-    }
-    
-    if (isSearchQuestion && selectedCrop && searchCategory) {
-      // Handle search-type questions
-      const database = pestFertilizerDatabase[selectedCrop][searchCategory];
-      
-      if (searchKeyword) {
-        // Search for specific item
-        const foundItem = database.find(
-          item => item.title.toLowerCase() === searchKeyword.toLowerCase()
-        );
-        
-        if (foundItem) {
-          setAnswer(`<div class="search-result">
-            <h4>${foundItem.title}</h4>
-            <p>${foundItem.description}</p>
-            <div class="mt-2">
-              <img src="${foundItem.imageUrl}" alt="${foundItem.title}" class="w-full h-32 object-cover rounded-md" />
-            </div>
-          </div>`);
-          setSearchTerm('');
+    for (const keyword of keywords) {
+      if (questionLower.includes(keyword)) {
+        if (keyword === "air") {
+          foundAnswer = answerDatabase[selectedCrop][currentSeason]["irigasi"];
         } else {
-          setAnswer(`Maaf, saya tidak menemukan informasi spesifik tentang ${searchKeyword} untuk tanaman ${selectedCrop}.`);
+          foundAnswer = answerDatabase[selectedCrop][currentSeason][keyword];
         }
-      } else {
-        // Show category items
-        const categoryItems = database.map(item => 
-          `<div class="search-result mb-3">
-            <h4 class="font-bold">${item.title}</h4>
-            <p class="text-sm">${item.description}</p>
-            <div class="mt-2">
-              <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-24 object-cover rounded-md" />
-            </div>
-          </div>`
-        ).join('');
         
-        setAnswer(`<div>
-          <h3 class="font-bold mb-2">Informasi ${searchCategory === 'hama' ? 'Hama' : 'Pupuk'} untuk ${selectedCrop === 'padi' ? 'Padi' : 'Jagung'}:</h3>
-          ${categoryItems}
-        </div>`);
+        if (foundAnswer) break;
       }
-    } else {
-      // Existing question-answer logic
-      // Logika sederhana untuk mencocokkan kata kunci
-      const questionLower = question.toLowerCase();
-      let foundAnswer = null;
-
-      // Cek kata kunci umum
-      const keywords = ["hama", "pupuk", "irigasi", "air", "bibit", "panen"];
-      
-      for (const keyword of keywords) {
-        if (questionLower.includes(keyword)) {
-          if (keyword === "air") {
-            foundAnswer = answerDatabase[selectedCrop][currentSeason]["irigasi"];
-          } else {
-            foundAnswer = answerDatabase[selectedCrop][currentSeason][keyword];
-          }
-          
-          if (foundAnswer) break;
-        }
-      }
-
-      // Jawaban default jika tidak ada yang cocok
-      if (!foundAnswer) {
-        foundAnswer = `Untuk tanaman ${selectedCrop === 'padi' ? 'padi' : 'jagung'} di musim ${currentSeason}, kami sarankan untuk selalu memperhatikan kondisi tanaman dan cuaca. Silakan bertanya lebih spesifik tentang hama, pupuk, irigasi, bibit, atau panen.`;
-      }
-
-      setAnswer(foundAnswer);
     }
 
+    // Jawaban default jika tidak ada yang cocok
+    if (!foundAnswer) {
+      foundAnswer = `Untuk tanaman ${selectedCrop === 'padi' ? 'padi' : 'jagung'} di musim ${currentSeason}, kami sarankan untuk selalu memperhatikan kondisi tanaman dan cuaca. Silakan bertanya lebih spesifik tentang hama, pupuk, irigasi, bibit, atau panen.`;
+    }
+
+    setAnswer(foundAnswer);
     toast.success("Pertanyaan diterima!");
-  };
-
-  // Function to handle search
-  const handleSearch = () => {
-    if (!selectedCrop || !searchTerm.trim()) {
-      toast.error("Mohon pilih tanaman dan masukkan kata kunci pencarian");
-      return;
-    }
-
-    // Search in both hama and pupuk
-    let results = [];
-    let resultType: 'hama' | 'pupuk' | null = null;
-    
-    // Search in hama
-    const hamaResults = pestFertilizerDatabase[selectedCrop].hama.filter(
-      item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-             item.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    
-    if (hamaResults.length > 0) {
-      results = hamaResults;
-      resultType = 'hama';
-    }
-    
-    // If no results in hama, search in pupuk
-    if (results.length === 0) {
-      const pupukResults = pestFertilizerDatabase[selectedCrop].pupuk.filter(
-        item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-               item.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      
-      if (pupukResults.length > 0) {
-        results = pupukResults;
-        resultType = 'pupuk';
-      }
-    }
-    
-    if (results.length > 0) {
-      const resultItems = results.map(item => 
-        `<div class="search-result mb-3">
-          <h4 class="font-bold">${item.title}</h4>
-          <p class="text-sm">${item.description}</p>
-          <div class="mt-2">
-            <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-24 object-cover rounded-md" />
-          </div>
-        </div>`
-      ).join('');
-      
-      setAnswer(`<div>
-        <h3 class="font-bold mb-2">Hasil pencarian untuk "${searchTerm}" (${resultType === 'hama' ? 'Hama' : 'Pupuk'}):</h3>
-        ${resultItems}
-      </div>`);
-    } else {
-      setAnswer(`Maaf, saya tidak menemukan informasi tentang "${searchTerm}" untuk tanaman ${selectedCrop === 'padi' ? 'padi' : 'jagung'}.`);
-    }
-    
-    toast.success("Pencarian selesai!");
   };
 
   return (
     <Card className="w-full max-w-md mx-auto p-4">
       <h2 className="text-xl font-semibold mb-4 text-center">Tanya Petani Pintar</h2>
-      
-      {/* Search Bar */}
-      <div className="mb-4 flex gap-2">
-        <Input
-          placeholder={`Cari info hama atau pupuk...`}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-1"
-          disabled={!selectedCrop}
-        />
-        <Button 
-          onClick={handleSearch}
-          className="bg-farm-green hover:bg-farm-green-dark"
-          disabled={!selectedCrop || !searchTerm.trim()}
-        >
-          <Search className="h-4 w-4 mr-2" />
-          Cari
-        </Button>
-      </div>
       
       {/* Question Form */}
       <form onSubmit={handleSubmit}>
@@ -377,10 +140,9 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ selectedCrop }) => {
       {answer && (
         <div className="mt-6 p-4 bg-farm-earth-light rounded-lg">
           <h3 className="font-semibold text-farm-earth-dark mb-2">Jawaban:</h3>
-          <div 
-            className="text-gray-700"
-            dangerouslySetInnerHTML={{ __html: answer }}
-          />
+          <div className="text-gray-700">
+            {answer}
+          </div>
         </div>
       )}
     </Card>
