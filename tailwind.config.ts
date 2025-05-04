@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,26 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom farming colors
+				farm: {
+					green: {
+						light: '#8BC34A',
+						DEFAULT: '#4CAF50',
+						dark: '#2E7D32'
+					},
+					earth: {
+						light: '#D7CCC8',
+						DEFAULT: '#A1887F',
+						dark: '#5D4037'
+					},
+					sky: {
+						light: '#BBDEFB',
+						DEFAULT: '#64B5F6',
+						dark: '#1976D2'
+					},
+					rice: '#F9FBE7',
+					corn: '#FFF9C4'
 				}
 			},
 			borderRadius: {
@@ -84,11 +105,21 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'rain': {
+					'0%': { transform: 'translateY(0)' },
+					'100%': { transform: 'translateY(20px)' }
+				},
+				'sun-pulse': {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.1)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'rain': 'rain 1s linear infinite',
+				'sun-pulse': 'sun-pulse 2s ease-in-out infinite'
 			}
 		}
 	},
